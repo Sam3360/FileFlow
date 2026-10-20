@@ -3,7 +3,7 @@ from __future__ import annotations
 import shutil
 from datetime import datetime
 from pathlib import Path
-from typing import Iterable, Iterator
+from typing import Iterable
 
 from fileflow.models import FileEntry
 
@@ -32,27 +32,15 @@ def list_directory(path: str | Path, include_hidden: bool = False) -> list[FileE
                 path=child,
                 name=child.name,
                 is_dir=child.is_dir(),
-                size=stat.st_size if child.is_file() else _count_dir_size(child),
+                # Directory sizes require a recursive walk and can stall startup
+                # on large user folders or slow/network drives.
+                size=stat.st_size if child.is_file() else 0,
                 modified=datetime.fromtimestamp(stat.st_mtime),
                 hidden=child.name.startswith('.'),
                 extension=child.suffix.lower(),
             )
         )
     return entries
-
-
-def _count_dir_size(path: Path) -> int:
-    total = 0
-    try:
-        for child in path.rglob('*'):
-            if child.is_file():
-                try:
-                    total += child.stat().st_size
-                except OSError:
-                    continue
-    except OSError:
-        return 0
-    return total
 
 
 def ensure_directory(path: str | Path) -> Path:

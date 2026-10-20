@@ -64,8 +64,11 @@ pytest
 ## Standalone executable
 
 ```powershell
-pyinstaller --onefile --windowed --name FileFlow --distpath dist .\fileflow\__main__.py
+pyinstaller --onefile --name FileFlow --distpath dist .\fileflow\__main__.py
 ```
+
+FileFlow is a terminal application, so build it with a console attached; do not
+use PyInstaller's `--windowed` option.
 
 ## Known limitations
 

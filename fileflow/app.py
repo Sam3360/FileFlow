@@ -163,7 +163,9 @@ class FileFlowApp(App):
         file_list = self.query_one("#file-list", ListView)
         file_list.clear()
         for entry in self.entries:
-            label = f"{entry.name}  {format_size(entry.size)}"
+            label = f"{'[DIR]' if entry.is_dir else '     '} {entry.name}"
+            if not entry.is_dir:
+                label = f"{label}  {format_size(entry.size)}"
             file_list.append(ListItem(Static(label)))
         if self.entries:
             file_list.index = self.current_index
@@ -184,7 +186,7 @@ class FileFlowApp(App):
                     f"Name: {entry.name}",
                     f"Path: {entry.path}",
                     f"Type: {'Folder' if entry.is_dir else 'File'}",
-                    f"Size: {format_size(entry.size)}",
+                    f"Size: {format_size(entry.size) if not entry.is_dir else 'Folder'}",
                     f"Modified: {entry.modified.strftime('%Y-%m-%d %H:%M')}",
                 ]
             )
@@ -343,7 +345,12 @@ class FileFlowApp(App):
 
     def on_list_view_selected(self, event: ListView.Selected) -> None:
         self.current_index = event.list_view.index if event.list_view.index is not None else 0
-        self.update_details()
+        entry = self._current_entry()
+        if entry is not None and entry.is_dir:
+            self.current_path = str(entry.path)
+            self.refresh_directory()
+        else:
+            self.update_details()
 
     def on_list_view_key(self, event: ListView.Key) -> None:
         if event.key == "enter":
