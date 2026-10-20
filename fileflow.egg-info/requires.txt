@@ -1,0 +1,6 @@
+textual>=0.81.0
+pytest>=8.0.0
+pyinstaller>=6.0.0
+
+[dev]
+pytest>=8.0.0

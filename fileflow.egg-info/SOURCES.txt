@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+fileflow/__init__.py
+fileflow/__main__.py
+fileflow.egg-info/PKG-INFO
+fileflow.egg-info/SOURCES.txt
+fileflow.egg-info/dependency_links.txt
+fileflow.egg-info/requires.txt
+fileflow.egg-info/top_level.txt

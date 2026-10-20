@@ -1,0 +1,23 @@
+[project]
+name = "fileflow"
+version = "0.1.0"
+description = "A modern terminal file manager for Windows"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "textual>=0.81.0",
+  "pytest>=8.0.0",
+  "pyinstaller>=6.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0.0",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
