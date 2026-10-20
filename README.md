@@ -42,6 +42,12 @@ Or use the provided script:
 .\scripts\launch.bat
 ```
 
+To run the packaged executable from a terminal:
+
+```powershell
+.\dist\FileFlow.exe
+```
+
 ## Keyboard shortcuts
 
 - Arrow keys: move through items
@@ -64,11 +70,12 @@ pytest
 ## Standalone executable
 
 ```powershell
-pyinstaller --onefile --name FileFlow --distpath dist .\fileflow\__main__.py
+.\scripts\build-exe.bat
 ```
 
-FileFlow is a terminal application, so build it with a console attached; do not
-use PyInstaller's `--windowed` option.
+The build script creates `dist\FileFlow.exe` as a one-file console application
+and includes Textual's packaged data. Run it from Windows Terminal, PowerShell,
+or Command Prompt; do not use PyInstaller's `--windowed` option.
 
 ## Known limitations
 
