@@ -115,7 +115,7 @@ class FileFlowApp(App):
         self.current_path = str(Path.home())
         self.show_hidden = False
         self.entries: list[FileEntry] = []
-        self.clipboard: ClipboardState = ClipboardState()
+        self._clipboard: ClipboardState = ClipboardState()
         self.current_index = 0
 
     def compose(self) -> ComposeResult:
@@ -221,6 +221,14 @@ class FileFlowApp(App):
             self.set_status(f"Opened {entry.name}")
         except OSError as exc:
             self.set_status(f"Could not open file: {exc}")
+
+    @property
+    def clipboard(self) -> ClipboardState:
+        return self._clipboard
+
+    @clipboard.setter
+    def clipboard(self, value: ClipboardState) -> None:
+        self._clipboard = value
 
     def action_copy_selected(self) -> None:
         entry = self._current_entry()
